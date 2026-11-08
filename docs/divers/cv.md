@@ -3,7 +3,7 @@ title: "CV"
 description: "CV — Essais, instrumentation et acquisition de données"
 date:
   created: 2026-11-06
-  updated: 2026-11-07
+  updated: 2026-11-08
 ---
 
 <div class="cv" markdown>

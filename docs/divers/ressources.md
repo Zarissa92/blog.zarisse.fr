@@ -4,7 +4,7 @@ description: "Ressources pour LGBTQIA+ et les allié.e.s"
 og_image: "assets/img/queer-resistsance-against-the-cuts-789f3f2c.jpg"
 date:
   created: 2026-11-07
-  updated: 2026-11-07
+  updated: 2026-11-08
 ---
 
 # :scales: Cadre législatif — Nos droits

@@ -3,7 +3,7 @@ title: "Divers"
 description: "Compétences et conseils de Zaza : skills et accompagnement de petits collectifs."
 date:
   created: 2026-11-07
-  updated: 2026-11-07
+  updated: 2026-11-08
 ---
 
 ## Skills
