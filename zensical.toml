@@ -72,9 +72,6 @@ pymdownx.tabbed.alternate_style = true
 pymdownx.tasklist.custom_checkbox = true
 pymdownx.tilde = {}
 
-[project.plugins.redirects.redirect_maps]
-"My Life/index.md" = "my-life/index.md"
-
 [project.plugins.rss]
 enabled = true
 feed_title = "Blog de Zaza"
