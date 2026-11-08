@@ -1,0 +1,55 @@
+/* ==========================================================================
+   MENU DE GAUCHE — dossiers en bleu, pages en rose
+   À mettre dans docs/assets/, après pluie.css (il reprend ses variables --bleu, --rose, --blanc).
+   ========================================================================== */
+:root {
+  --menu-dossier: var(--bleu, #5bcefa);   /* dossiers (sections et sous-dossiers) */
+  --menu-page: var(--rose, #f5a9b8);      /* pages .md */
+  --menu-survol: var(--blanc, #ffffff);   /* au survol */
+}
+
+/* tous les liens du menu de gauche (pas la table des matières, à droite) : rose = pages */
+.md-nav:not(.md-nav--secondary) .md-nav__link {
+  color: var(--menu-page) !important;
+}
+
+/* dossiers : bleu. Un dossier est soit une section, soit un élément qui en contient d'autres,
+   soit un <div class="md-nav__link"> (dossier avec sa propre page) et le lien qu'il contient */
+.md-nav:not(.md-nav--secondary) .md-nav__item--section > .md-nav__link,
+.md-nav:not(.md-nav--secondary) .md-nav__item--nested > .md-nav__link,
+.md-nav:not(.md-nav--secondary) .md-nav__container > .md-nav__link,
+.md-nav:not(.md-nav--secondary) div.md-nav__link,
+.md-nav:not(.md-nav--secondary) div.md-nav__link .md-nav__link,
+.md-nav:not(.md-nav--secondary) label.md-nav__link {
+  color: var(--menu-dossier) !important;
+  font-weight: 700;
+}
+
+/* survol : blanc (sinon rien ne change, les pages étant déjà roses comme le survol de pluie.css) */
+.md-nav:not(.md-nav--secondary) .md-nav__link:hover {
+  color: var(--menu-survol) !important;
+}
+
+/* pages .md à l'intérieur des dossiers : liste à puces (les pages de la racine restent sans puce) */
+.md-nav--primary .md-nav .md-nav__item:not(.md-nav__item--nested) > .md-nav__link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+}
+.md-nav--primary .md-nav .md-nav__item:not(.md-nav__item--nested) > .md-nav__link::before {
+  content: "•";
+  color: var(--menu-page);
+  flex-shrink: 0;
+}
+
+/* flèche des dossiers dépliables */
+.md-nav:not(.md-nav--secondary) .md-nav__icon,
+.md-nav:not(.md-nav--secondary) .md-nav__link::after {
+  color: var(--menu-dossier);
+}
+
+/* page active dont le titre passe sur deux lignes : le bouton de la table des matières (label)
+   s'affichait comme une ligne en double au-dessus du lien de la page. On le masque ; le lien reste. */
+.md-nav__item--active > label.md-nav__link[for="__toc"] {
+  display: none !important;
+}

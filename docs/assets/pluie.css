@@ -1,0 +1,553 @@
+/* ============================================================
+ *  Thème Matrix "trans" pour Zensical
+ *  Cadres et accents aux couleurs du drapeau transgenre,
+ *  texte en violet flat, sur fond gris translucide.
+ *  ============================================================ */
+
+:root,
+body,
+[data-md-color-scheme],
+[data-md-color-scheme="default"],
+[data-md-color-scheme="slate"],
+[data-md-color-scheme="matrix"] {
+  /* ---- Couleurs du drapeau ---- */
+  --bleu: #5bcefa;
+  --rose: #f5a9b8;
+  --blanc: #ffffff;
+
+  /* ---- Texte (violet flat) ---- */
+  --violet: #9b59b6;                       /* texte principal */
+  --violet-doux: #c39bd3;                  /* texte secondaire */
+
+  /* ---- Cadres et fonds ---- */
+  --cadre: rgba(91, 206, 250, 0.55);       /* cadre principal (bleu) */
+  --cadre-rose: rgba(245, 169, 184, 0.55); /* cadre secondaire (rose) */
+  --cadre-leger: rgba(91, 206, 250, 0.25); /* séparateurs internes */
+  --gris: rgba(28, 30, 34, 0.5);           /* fond gris des blocs de texte */
+  --gris-fonce: rgba(16, 17, 20, 0.5);     /* fond du code */
+  --gris-clair: rgba(44, 46, 52, 0.5);     /* survols, en-têtes de tableaux */
+  --police: "Fira Code", "JetBrains Mono", "Consolas", "Courier New", monospace;
+  --halo: 0 0 18px rgba(91, 206, 250, 0.15), 0 0 30px rgba(245, 169, 184, 0.08);
+  --lueur-bleue: 0 0 6px rgba(91, 206, 250, 0.55);
+  --lueur-rose: 0 0 6px rgba(245, 169, 184, 0.55);
+
+  color-scheme: dark;
+
+  /* ---- Variables du thème Zensical ---- */
+  --md-default-bg-color: transparent;
+  --md-default-bg-color--light: var(--gris);
+  --md-default-bg-color--lighter: var(--gris-clair);
+  --md-default-bg-color--lightest: var(--gris-clair);
+  --md-default-fg-color: var(--violet);
+  --md-default-fg-color--light: var(--violet-doux);
+  --md-default-fg-color--lighter: rgba(155, 89, 182, 0.5);
+  --md-default-fg-color--lightest: rgba(155, 89, 182, 0.15);
+  --md-primary-fg-color: var(--gris);
+  --md-primary-fg-color--light: var(--gris-clair);
+  --md-primary-fg-color--dark: var(--gris-fonce);
+  --md-primary-bg-color: var(--bleu);
+  --md-primary-bg-color--light: var(--rose);
+  --md-accent-fg-color: var(--rose);
+  --md-accent-fg-color--transparent: rgba(245, 169, 184, 0.12);
+  --md-accent-bg-color: #000;
+  --md-typeset-color: var(--violet);
+  --md-typeset-a-color: var(--rose);
+  --md-typeset-mark-color: rgba(245, 169, 184, 0.3);
+  --md-typeset-table-color: var(--cadre-leger);
+  --md-code-bg-color: var(--gris-fonce);
+  --md-code-fg-color: var(--violet-doux);
+  --md-code-hl-color: rgba(91, 206, 250, 0.15);
+  --md-code-hl-comment-color: #7f7a8c;
+  --md-code-hl-keyword-color: var(--bleu);
+  --md-code-hl-string-color: var(--rose);
+  --md-code-hl-number-color: var(--blanc);
+  --md-code-hl-function-color: #a6e4fc;
+  --md-code-hl-constant-color: #fbd3db;
+  --md-code-hl-name-color: var(--violet-doux);
+  --md-code-hl-operator-color: var(--violet-doux);
+  --md-code-hl-punctuation-color: var(--violet-doux);
+  --md-code-hl-variable-color: var(--violet-doux);
+  --md-code-hl-special-color: #ffd27d;
+  --md-code-hl-generic-color: var(--violet-doux);
+  --md-footer-fg-color: var(--violet);
+  --md-footer-fg-color--light: var(--violet-doux);
+  --md-footer-fg-color--lighter: rgba(155, 89, 182, 0.5);
+  --md-footer-bg-color: transparent;
+  --md-footer-bg-color--dark: transparent;
+  --md-text-font-family: var(--police);
+  --md-code-font-family: var(--police);
+}
+
+/* ============================================================
+ *  Fond noir + pluie derrière tout
+ *  ============================================================ */
+
+html {
+  background: #000;
+}
+body {
+  background: transparent !important;
+  color: var(--violet);
+  font-family: var(--police);
+}
+
+#pluie {
+position: fixed !important;
+inset: 0 !important;
+width: 100vw !important;
+height: 100vh !important;
+z-index: 0 !important;
+pointer-events: none !important;
+opacity: 0.7;
+}
+
+/* Tout le site passe au-dessus de la pluie */
+.md-header {
+  z-index: 20;
+}
+.md-container {
+  position: relative;
+  z-index: 10;
+  background: transparent;
+}
+.md-main,
+.md-main__inner,
+.md-content {
+  background: transparent;
+}
+
+/* ============================================================
+ *  Bloc commun : fond gris + cadre bleu
+ *  ============================================================ */
+
+.md-header,
+.md-tabs,
+.md-content__inner,
+.md-sidebar__scrollwrap,
+.md-footer__inner,
+.md-footer-meta__inner,
+.md-search__output,
+.md-top {
+  background: var(--gris) !important;
+  border: 1px solid var(--cadre);
+  box-shadow: var(--halo);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* ============================================================
+ *  En-tête : liseré bleu / rose / blanc / rose / bleu
+ *  ============================================================ */
+
+.md-header {
+  color: var(--bleu);
+  border-width: 0 0 3px 0;
+  border-style: solid;
+  border-image: linear-gradient(
+    90deg,
+    var(--bleu) 0 20%,
+                                var(--rose) 20% 40%,
+                                var(--blanc) 40% 60%,
+                                var(--rose) 60% 80%,
+                                var(--bleu) 80% 100%
+  ) 1;
+  border-radius: 0;
+}
+.md-header__title,
+.md-header__button,
+.md-header__topic {
+  color: var(--bleu);
+}
+.md-header__title {
+  text-shadow: var(--lueur-bleue);
+}
+
+/* Onglets (si activés) */
+.md-tabs {
+  border-width: 0 0 1px 0;
+  border-color: var(--cadre-rose);
+  border-radius: 0;
+  color: var(--violet);
+}
+.md-tabs__link:hover,
+.md-tabs__link--active {
+  color: var(--rose);
+  text-shadow: var(--lueur-rose);
+}
+
+/* Recherche */
+.md-search__form {
+  background: var(--gris-fonce);
+  border: 1px solid var(--cadre-leger);
+  border-radius: 4px;
+}
+.md-search__form:hover {
+  background: var(--gris-clair);
+}
+.md-search__input,
+.md-search__input::placeholder,
+.md-search__icon {
+  color: var(--violet-doux);
+}
+.md-search__output {
+  border-radius: 0 0 6px 6px;
+}
+.md-search-result__meta {
+  background: var(--gris-clair);
+  color: var(--rose);
+}
+.md-search-result__link:hover,
+.md-search-result__link:focus {
+  background: var(--gris-clair);
+}
+
+/* ============================================================
+ *  Contenu central
+ *  ============================================================ */
+
+.md-content__inner {
+  border-radius: 6px;
+  padding: 28px 32px;
+  margin: 24px 16px;
+}
+.md-content__inner::before {
+  display: none;
+}
+
+/* Date de la page (front matter « date »), affichée au-dessus du titre */
+.page-date {
+  margin: 0 0 1.2em;
+  padding-bottom: 0.4em;
+  border-bottom: 1px dashed var(--cadre-leger);
+  font-family: var(--police);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--violet-doux);
+}
+
+/* Fil d'Ariane (navigation.path) */
+.md-path,
+.md-path__link {
+  color: var(--violet-doux);
+}
+.md-path__link:hover {
+  color: var(--rose);
+}
+
+/* ============================================================
+ *  Menus latéraux
+ *  ============================================================ */
+
+.md-sidebar__scrollwrap {
+  border-radius: 6px;
+  margin: 0 8px;
+  border-color: var(--cadre-rose);
+}
+.md-nav__title {
+  color: var(--bleu) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.md-nav__link {
+  color: var(--violet);
+}
+.md-nav__link:hover,
+.md-nav__link--active,
+.md-nav__item .md-nav__link--active {
+  color: var(--rose) !important;
+  text-shadow: var(--lueur-rose);
+}
+.md-nav__item--section > .md-nav__link {
+  color: var(--bleu);
+}
+
+/* ============================================================
+ *  Titres et texte
+ *  ============================================================ */
+
+.md-typeset {
+  color: var(--violet);
+}
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+  color: var(--bleu);
+  font-family: inherit;
+  font-weight: 600;
+}
+.md-typeset h1 {
+  text-shadow: 0 0 8px rgba(91, 206, 250, 0.5);
+}
+.md-typeset h3,
+.md-typeset h4 {
+  color: var(--rose);
+}
+.md-typeset h2 {
+  border-bottom: 1px dashed var(--cadre-rose);
+  padding-bottom: 4px;
+}
+.md-typeset p,
+.md-typeset li,
+.md-typeset dd {
+  line-height: 1.7;
+  color: var(--violet);
+}
+.md-typeset strong {
+  color: var(--violet-doux);
+}
+.md-typeset hr {
+  border-bottom-color: var(--cadre-leger);
+}
+.md-typeset blockquote {
+  border-left: 3px solid var(--cadre-rose);
+  color: var(--violet-doux);
+  background: var(--gris-clair);
+  padding: 6px 14px;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Liens */
+.md-typeset a {
+  color: var(--rose);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(245, 169, 184, 0.4);
+}
+.md-typeset a:hover,
+.md-typeset a:focus {
+  color: var(--blanc);
+  border-bottom-color: var(--blanc);
+}
+.md-typeset a.headerlink,
+.md-typeset .md-button {
+  border-bottom: none;
+}
+.md-typeset .md-button {
+  color: var(--bleu);
+  border: 1px solid var(--cadre);
+  background: var(--gris-fonce);
+}
+.md-typeset .md-button:hover {
+  background: var(--bleu);
+  color: #000;
+}
+.md-typeset .md-button--primary {
+  color: #000;
+  background: var(--rose);
+  border-color: var(--rose);
+}
+
+/* ============================================================
+ *  Code
+ *  ============================================================ */
+
+.md-typeset code {
+  background: var(--gris-fonce);
+  color: var(--rose);
+  padding: 1px 5px;
+  border: 1px solid var(--cadre-leger);
+  border-radius: 3px;
+}
+.md-typeset pre {
+  border: 1px solid var(--cadre);
+  border-radius: 6px;
+  box-shadow: var(--halo);
+}
+.md-typeset pre > code {
+  background: var(--gris-fonce);
+  color: var(--violet-doux);
+  border: none;
+  padding: 12px 14px;
+}
+.md-clipboard {
+  color: var(--violet-doux);
+}
+.md-clipboard:hover {
+  color: var(--rose);
+}
+
+/* ============================================================
+ *  Tableaux
+ *  ============================================================ */
+
+.md-typeset table:not([class]) {
+  color: var(--violet);
+  background: var(--gris-fonce);
+  border: 1px solid var(--cadre);
+  border-radius: 6px;
+}
+.md-typeset table:not([class]) th {
+  color: var(--bleu);
+  background: var(--gris-clair);
+}
+.md-typeset table:not([class]) tr:hover {
+  background: rgba(245, 169, 184, 0.06);
+}
+
+/* ============================================================
+ *  Encadrés, blocs dépliables, onglets, touches
+ *  ============================================================ */
+
+.md-typeset .admonition,
+.md-typeset details {
+  background: var(--gris-fonce);
+  color: var(--violet);
+  border: 1px solid var(--cadre);
+  border-left: 4px solid var(--rose);
+  border-radius: 6px;
+  box-shadow: none;
+}
+.md-typeset .admonition-title,
+.md-typeset summary {
+  background: var(--gris-clair) !important;
+  color: var(--bleu);
+}
+
+.md-typeset .tabbed-set {
+  border: 1px solid var(--cadre-leger);
+  border-radius: 6px;
+  padding: 0 10px;
+}
+.md-typeset .tabbed-labels > label {
+  color: var(--violet-doux);
+}
+.md-typeset .tabbed-labels > label:hover,
+.md-typeset .tabbed-set > input:checked + label {
+  color: var(--rose);
+}
+
+.md-typeset kbd {
+  background: var(--gris-clair);
+  color: var(--rose);
+  box-shadow: 0 0 0 1px var(--cadre-leger);
+}
+
+/* Sélection de texte */
+::selection {
+  background: rgba(245, 169, 184, 0.35);
+  color: var(--blanc);
+}
+
+/* ============================================================
+ *  Pied de page
+ *  ============================================================ */
+
+.md-footer,
+.md-footer-meta {
+  background: transparent !important;
+}
+.md-footer__inner,
+.md-footer-meta__inner {
+  border-radius: 6px;
+  margin: 12px auto;
+}
+.md-footer__link,
+.md-footer__title,
+.md-copyright {
+  color: var(--violet);
+}
+.md-footer__direction {
+  color: var(--rose);
+}
+
+/* Bouton "retour en haut" */
+.md-top {
+  color: var(--bleu);
+  border-radius: 20px;
+}
+.md-top:hover {
+  background: var(--rose) !important;
+  color: #000;
+}
+
+/* ============================================================
+ *  Téléphone
+ *  ============================================================ */
+
+@media (max-width: 600px) {
+  .md-content__inner {
+    padding: 20px 16px;
+    margin: 12px 6px;
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #pluie {
+  opacity: 0.3;
+  }
+}
+
+/* ============================================================
+ *  Photo de profil ronde dans l'en-tête (style GitHub)
+ *  ============================================================ */
+
+.md-header__button.md-logo {
+  display: inline-block !important;   /* visible aussi sur téléphone */
+  padding: 0.3rem;
+  margin-right: 0.4rem;
+}
+
+.md-header__button.md-logo img {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  object-fit: cover;                  /* recadre sans déformer */
+  border: 2px solid var(--bleu);
+  box-shadow: 0 0 0 2px var(--rose), 0 0 10px rgba(245, 169, 184, 0.5);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.md-header__button.md-logo:hover img {
+  box-shadow: 0 0 0 2px var(--rose), 0 0 16px rgba(91, 206, 250, 0.8);
+  transform: scale(1.06);
+}
+
+/* Même photo ronde dans le menu latéral sur téléphone */
+.md-nav__button.md-logo img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--bleu);
+  box-shadow: 0 0 0 2px var(--rose);
+}
+/* ==========================================================================
+   MENU DE GAUCHE — dossiers en bleu, pages en rose
+   À mettre dans docs/assets/, après pluie.css (il reprend ses variables --bleu, --rose, --blanc).
+   ========================================================================== */
+:root {
+  --menu-dossier: var(--bleu, #5bcefa);   /* dossiers (sections et sous-dossiers) */
+  --menu-page: var(--rose, #f5a9b8);      /* pages .md */
+  --menu-survol: var(--blanc, #ffffff);   /* au survol */
+}
+
+/* tous les liens du menu de gauche (pas la table des matières, à droite) : rose = pages */
+.md-nav:not(.md-nav--secondary) .md-nav__link {
+  color: var(--menu-page) !important;
+}
+
+/* dossiers : bleu. Un dossier est soit une section, soit un élément qui en contient d'autres,
+   soit un <div class="md-nav__link"> (dossier avec sa propre page) et le lien qu'il contient */
+.md-nav:not(.md-nav--secondary) .md-nav__item--section > .md-nav__link,
+.md-nav:not(.md-nav--secondary) .md-nav__item--nested > .md-nav__link,
+.md-nav:not(.md-nav--secondary) .md-nav__container > .md-nav__link,
+.md-nav:not(.md-nav--secondary) div.md-nav__link,
+.md-nav:not(.md-nav--secondary) div.md-nav__link .md-nav__link,
+.md-nav:not(.md-nav--secondary) label.md-nav__link {
+  color: var(--menu-dossier) !important;
+  font-weight: 700;
+}
+
+/* survol : blanc (sinon rien ne change, les pages étant déjà roses comme le survol de pluie.css) */
+.md-nav:not(.md-nav--secondary) .md-nav__link:hover {
+  color: var(--menu-survol) !important;
+}
+
+/* flèche des dossiers dépliables */
+.md-nav:not(.md-nav--secondary) .md-nav__icon,
+.md-nav:not(.md-nav--secondary) .md-nav__link::after {
+  color: var(--menu-dossier);
+}

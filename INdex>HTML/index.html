@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <a rel="me noopener noreferrer" href="https://tech.lgbt/@zarisse" target="_blank">Mastodon</a>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zaza_Zone</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon-progress.svg">
+
+  <style>
+    :root {
+      /* Couleurs du drapeau transgenre */
+      --bleu: #5bcefa;
+      --rose: #f5a9b8;
+      --blanc: #ffffff;
+
+      /* Texte en violet flat */
+      --violet: #9b59b6;
+      --violet-doux: #c39bd3;
+
+      --fond-cadre: rgba(8, 6, 12, 0.9);
+      --cadre: rgba(91, 206, 250, 0.7);
+      --cadre-rose: rgba(245, 169, 184, 0.5);
+    }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: #000;
+      color: var(--violet);
+      font-family: "Fira Code", "Consolas", "Courier New", monospace;
+    }
+    ::selection {
+      background: rgba(245, 169, 184, 0.35);
+      color: var(--blanc);
+    }
+    #pluie {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    main {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    .cadre {
+      width: 100%;
+      max-width: 680px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+      box-sizing: border-box;
+      padding: 28px 32px;
+      background: var(--fond-cadre);
+      border: 1px solid var(--cadre);
+      border-radius: 6px;
+      box-shadow:
+        0 0 24px rgba(91, 206, 250, 0.22),
+        0 0 40px rgba(245, 169, 184, 0.12),
+        inset 0 0 18px rgba(245, 169, 184, 0.07);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      line-height: 1.6;
+      font-size: 17px;
+      scrollbar-color: var(--rose) transparent;
+    }
+    .cadre h1 {
+      margin-top: 0;
+      font-size: 1.8em;
+      color: var(--bleu);
+      text-shadow: 0 0 8px rgba(91, 206, 250, 0.6);
+      padding-bottom: 8px;
+      /* Liseré aux 5 bandes du drapeau */
+      border-bottom: 3px solid;
+      border-image: linear-gradient(
+        90deg,
+        var(--bleu) 0 20%,
+        var(--rose) 20% 40%,
+        var(--blanc) 40% 60%,
+        var(--rose) 60% 80%,
+        var(--bleu) 80% 100%
+      ) 1;
+    }
+    .cadre h2 {
+      color: var(--bleu);
+      font-size: 1.2em;
+      margin-top: 1.6em;
+      border-bottom: 1px dashed var(--cadre-rose);
+      padding-bottom: 4px;
+    }
+    .cadre h3,
+    .cadre h4 {
+      color: var(--rose);
+    }
+    .cadre strong {
+      color: var(--violet-doux);
+    }
+    .cadre a {
+      color: var(--rose);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(245, 169, 184, 0.4);
+    }
+    .cadre a:hover,
+    .cadre a:focus {
+      color: var(--blanc);
+      border-bottom-color: var(--blanc);
+    }
+    .cadre ul { padding-left: 1.2em; }
+    .cadre li { margin: 0.4em 0; }
+    .cadre li::marker { color: var(--bleu); }
+    .cadre code {
+      background: rgba(245, 169, 184, 0.1);
+      color: var(--rose);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .cadre pre {
+      border: 1px solid var(--cadre);
+      border-radius: 6px;
+      padding: 12px 14px;
+      overflow-x: auto;
+      background: rgba(16, 14, 22, 0.8);
+    }
+    .cadre pre code {
+      background: none;
+      color: var(--violet-doux);
+      padding: 0;
+    }
+    .cadre blockquote {
+      margin: 1em 0;
+      padding: 6px 14px;
+      border-left: 3px solid var(--rose);
+      color: var(--violet-doux);
+      background: rgba(44, 40, 52, 0.5);
+      border-radius: 0 4px 4px 0;
+    }
+    .cadre hr {
+      border: none;
+      border-top: 1px solid var(--cadre-rose);
+    }
+    .cadre p { margin: 0.8em 0; }
+    @media (max-width: 600px) {
+      .cadre { padding: 20px 18px; font-size: 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #pluie { opacity: 0.35; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="pluie" aria-hidden="true"></canvas>
+
+  <main>
+    <article class="cadre" id="contenu">Chargement…</article>
+  </main>
+
+  <!-- Convertit le Markdown en HTML, directement dans le navigateur -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+  <script>
+    // Charge contenu.md et l'affiche dans le cadre
+    (function () {
+      var zone = document.getElementById("contenu");
+      fetch("contenu.md", { cache: "no-cache" })
+        .then(function (reponse) {
+          if (!reponse.ok) throw new Error("HTTP " + reponse.status);
+          return reponse.text();
+        })
+        .then(function (texte) {
+          zone.innerHTML = marked.parse(texte);
+          // Chaque lien s'ouvre dans un nouvel onglet
+          zone.querySelectorAll("a[href]").forEach(function (lien) {
+            lien.setAttribute("target", "_blank");
+            lien.setAttribute("rel", "noopener noreferrer");
+          });
+        })
+        .catch(function () {
+          zone.textContent = "Impossible de charger le contenu. Ouvre ce site via un serveur web (pas en double-cliquant sur le fichier).";
+        });
+    })();
+  </script>
+
+  <script>
+    // Pluie matricielle aux couleurs du drapeau transgenre
+    (function () {
+      var canvas = document.getElementById("pluie");
+      var ctx = canvas.getContext("2d");
+
+      var DRAPEAU = ["#5bcefa", "#f5a9b8", "#ffffff", "#f5a9b8", "#5bcefa"];
+      // "bandes"    : 5 bandes horizontales comme le drapeau
+      // "colonnes"  : drapeau couché, une couleur par groupe de colonnes
+      // "aleatoire" : chaque goutte prend une couleur du drapeau au hasard
+      var MODE = "bandes";
+
+      var caracteres = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>/{}[]";
+      var taille = 18;
+      var gouttes = [];
+      var couleurGoutte = [];
+      var vitesseMax = (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) ? 0.3 : 1;
+
+      function couleurHasard() {
+        return DRAPEAU[Math.floor(Math.random() * DRAPEAU.length)];
+      }
+
+      function couleur(i, y) {
+        var n = DRAPEAU.length;
+        if (MODE === "bandes") {
+          return DRAPEAU[Math.max(0, Math.min(n - 1, Math.floor((y / window.innerHeight) * n)))];
+        }
+        if (MODE === "colonnes") {
+          return DRAPEAU[Math.min(n - 1, Math.floor((i / gouttes.length) * n))];
+        }
+        return couleurGoutte[i];
+      }
+
+      function initialiser() {
+        var ratio = window.devicePixelRatio || 1;
+        canvas.width = window.innerWidth * ratio;
+        canvas.height = window.innerHeight * ratio;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        var colonnes = Math.floor(window.innerWidth / taille);
+        gouttes = [];
+        couleurGoutte = [];
+        for (var i = 0; i < colonnes; i++) {
+          gouttes.push(Math.random() * -50);
+          couleurGoutte.push(couleurHasard());
+        }
+      }
+
+      function caractereAleatoire() {
+        return caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+      }
+
+      function dessiner() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+        ctx.font = taille + "px monospace";
+        for (var i = 0; i < gouttes.length; i++) {
+          var x = i * taille;
+          var y = gouttes[i] * taille;
+
+          // Tête de la goutte
+          ctx.fillStyle = couleur(i, y);
+          ctx.fillText(caractereAleatoire(), x, y);
+
+          // Caractère juste derrière, plus discret
+          ctx.fillStyle = couleur(i, y - taille);
+          ctx.globalAlpha = 0.6;
+          ctx.fillText(caractereAleatoire(), x, y - taille);
+          ctx.globalAlpha = 1;
+
+          if (y > window.innerHeight && Math.random() > 0.975) {
+            gouttes[i] = 0;
+            couleurGoutte[i] = couleurHasard();
+          } else {
+            gouttes[i] += (0.5 + Math.random() * 0.5) * vitesseMax;
+          }
+        }
+      }
+
+      initialiser();
+      window.addEventListener("resize", initialiser);
+      setInterval(dessiner, 33);
+    })();
+  </script>
+</body>
+</html>

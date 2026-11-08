@@ -1,0 +1,88 @@
+[project]
+site_name = "Blog de Zaza"
+site_url = "https://blog.zarisse.fr/"
+site_author = "Zaza"
+site_description = "Blog de Zaza : logiciels libres, luttes sociales, anarchie, piraterie et vie trans."
+copyright = "Copyright &copy; 2026 Zarisse"
+docs_dir = "docs"
+site_dir = "site"
+
+# cv.css après pluie.css pour qu'il puisse s'appuyer sur ses variables
+extra_css = ["assets/pluie.css", "assets/cv.css", "assets/collection.css", "assets/menu.css", "assets/accueil.css", "assets/rss.css", "assets/mastodon.css", "assets/titre.css"]
+extra_javascript = ["assets/pluie.js"]
+[project.theme]
+language = "fr"
+# Équivalent de `custom_dir: overrides` (ancien mkdocs.yml).
+# Requis : main.html (date des pages, lien RSS) et partials/header.html (icônes Mastodon et RSS).
+# matrix.html n'est utilisé par aucune page pour l'instant (`template: matrix.html` dans le front matter).
+custom_dir = "overrides"
+
+# Photo de profil à gauche dans l'en-tête (à la place de l'icône livre)
+logo = "assets/avatar.jpg"
+# Même photo pour l'icône de l'onglet du navigateur
+favicon = "assets/favicon-progress.svg"
+# Pas de police Google par défaut : la police vient de pluie.css
+font = false
+
+features = [
+  "content.code.copy",
+  "content.code.annotate",
+  "content.tooltips",
+  "navigation.footer",
+  "navigation.indexes",
+  "navigation.instant",
+  "navigation.path",
+  "navigation.top",
+  "navigation.tracking",
+  "search.highlight",
+]
+
+# Schéma de couleurs personnalisé "matrix" (défini dans pluie.css),
+# à la place des schémas par défaut "default"/"slate", sans bouton de bascule
+[[project.theme.palette]]
+
+scheme = "matrix"
+
+[project.markdown_extensions]
+abbr = {}
+admonition = {}
+attr_list = {}
+def_list = {}
+footnotes = {}
+md_in_html = {}
+toc.permalink = true
+pymdownx.betterem = {}
+pymdownx.caret = {}
+pymdownx.details = {}
+# Icônes :material-…: (utilisées dans les cartes du CV)
+pymdownx.emoji.emoji_index = "zensical.extensions.emoji.twemoji"
+pymdownx.emoji.emoji_generator = "zensical.extensions.emoji.to_svg"
+pymdownx.highlight.anchor_linenums = true
+pymdownx.highlight.line_spans = "__span"
+pymdownx.highlight.pygments_lang_class = true
+pymdownx.inlinehilite = {}
+pymdownx.keys = {}
+pymdownx.magiclink = {}
+pymdownx.mark = {}
+pymdownx.smartsymbols = {}
+pymdownx.superfences.custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
+pymdownx.tabbed.alternate_style = true
+pymdownx.tasklist.custom_checkbox = true
+pymdownx.tilde = {}
+
+[project.plugins.redirects.redirect_maps]
+"My Life/index.md" = "my-life/index.md"
+
+[project.plugins.rss]
+enabled = true
+feed_title = "Blog de Zaza"
+length = 20
+match_path = ".*"
+
+# Liens externes ouverts dans un nouvel onglet (toutes les pages, y compris wikipick).
+# assets = false : le plugin ne télécharge pas les ressources externes.
+[project.plugins.privacy]
+assets = false
+links_attr_map = { target = "_blank" }

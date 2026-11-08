@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block extrahead %}
+  {{ super() }}
+  <link rel="alternate" type="application/rss+xml" title="Blog de Zaza" href="{{ 'feed_rss_created.xml' | url }}">
+{% endblock %}
+{% block content %}
+  {% if page.meta.date %}
+  {% set d = page.meta.date %}
+  {% set cree = d.created | string %}
+  {% set maj = d.updated | string if d.updated else cree %}
+  <p class="page-date">Créée le {{ cree[8:10] }}/{{ cree[5:7] }}/{{ cree[0:4] }}{% if maj != cree %} · modifiée le {{ maj[8:10] }}/{{ maj[5:7] }}/{{ maj[0:4] }}{% endif %}</p>
+  {% endif %}
+  {{ super() }}
+{% endblock %}

@@ -1,0 +1,96 @@
+/* ==========================================================================
+   PAGE D'ACCUEIL — cartes, grille et avatars
+   Chargé après pluie.css (il reprend ses variables --bleu, --rose, --gris, --halo…).
+   Tout est scopé sous .accueil : les autres pages ne sont pas touchées.
+   ========================================================================== */
+
+.accueil {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+/* en-tête : avatar qui luit, accroche centrée */
+.accueil-hero {
+  text-align: center;
+  padding: 1rem 0 0.5rem;
+}
+.accueil-avatar {
+  display: block;
+  margin: 0 auto 16px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--bleu);
+  box-shadow: 0 0 16px rgba(245, 169, 184, 0.45), var(--lueur-bleue);
+}
+.accueil-accroche {
+  color: var(--violet-doux);
+  font-style: italic;
+  margin: 0 0 0.5rem;
+}
+
+/* cartes : fond translucide, cadre bleu, halo doux */
+.accueil-carte {
+  background: var(--gris);
+  border: 1px solid var(--cadre);
+  border-radius: 0.5rem;
+  box-shadow: var(--halo);
+  padding: 0.75rem 1.25rem;
+  margin: 1rem 0;
+}
+.accueil-carte > :first-child {
+  margin-top: 0.25rem;
+}
+.accueil-carte h2 {
+  color: var(--rose);
+  border-bottom: 1px dashed var(--cadre-rose);
+  padding-bottom: 4px;
+  margin-top: 0.25rem;
+  text-shadow: var(--lueur-rose);
+}
+.accueil-carte img.accueil-avatar {
+  margin: 0.5rem auto;
+}
+
+/* grille : deux colonnes sur grand écran, une colonne sur téléphone */
+.accueil-grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 0;
+}
+.accueil-grille > .accueil-carte {
+  margin: 1rem 0.5rem;
+}
+.accueil-grille > .accueil-carte:first-child {
+  margin-left: 0;
+}
+
+/* listes : puces en losange bleu, sans retrait */
+.accueil ul {
+  list-style: none;
+  padding-left: 0;
+}
+.accueil li {
+  padding-left: 1.2em;
+  position: relative;
+}
+.accueil li::before {
+  content: "◆";
+  color: var(--bleu);
+  position: absolute;
+  left: 0;
+  font-size: 0.7em;
+  top: 0.35em;
+}
+
+/* téléphone : une seule colonne, pas de marge latérale parasite */
+@media (max-width: 600px) {
+  .accueil-grille > .accueil-carte,
+  .accueil-grille > .accueil-carte:first-child {
+    margin: 1rem 0;
+  }
+  .accueil-carte {
+    padding: 0.75rem 1rem;
+  }
+}

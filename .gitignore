@@ -1,0 +1,16 @@
+# Site généré par build.py (se refait à chaque build)
+site/
+
+# Environnement Python et fichiers compilés
+venv_blog/
+__pycache__/
+*.pyc
+
+# Caches de build (images de partage, empreintes, Zensical)
+.cache/
+
+# Fichiers de dossier KDE (Dolphin)
+.directory
+
+# Images téléchargées par wikipick (lourdes, se retéléchargent)
+docs/assets/img/

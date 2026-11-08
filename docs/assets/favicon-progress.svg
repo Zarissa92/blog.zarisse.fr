@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <clipPath id="rounded">
+      <rect x="0" y="0" width="32" height="32" rx="6" ry="6"/>
+    </clipPath>
+    <clipPath id="chevron">
+      <polygon points="0,0 16,16 0,32"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#rounded)">
+    <rect x="0" y="0"     width="32" height="5.34" fill="#E40303"/>
+    <rect x="0" y="5.34"  width="32" height="5.33" fill="#FF8C00"/>
+    <rect x="0" y="10.67" width="32" height="5.33" fill="#FFED00"/>
+    <rect x="0" y="16"    width="32" height="5.33" fill="#008026"/>
+    <rect x="0" y="21.33" width="32" height="5.33" fill="#24408E"/>
+    <rect x="0" y="26.66" width="32" height="5.34" fill="#732982"/>
+    <g clip-path="url(#chevron)">
+      <rect x="0" y="0"     width="32" height="6.4" fill="#000000"/>
+      <rect x="0" y="6.4"   width="32" height="6.4" fill="#613915"/>
+      <rect x="0" y="12.8"  width="32" height="6.4" fill="#75D7EE"/>
+      <rect x="0" y="19.2"  width="32" height="6.4" fill="#F5A9B8"/>
+      <rect x="0" y="25.6"  width="32" height="6.4" fill="#FFFFFF"/>
+    </g>
+  </g>
+</svg>

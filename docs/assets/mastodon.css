@@ -1,0 +1,31 @@
+/* Icône Mastodon de l'en-tête (à gauche de la recherche) : couleurs du drapeau trans, lueur fixe */
+
+.md-header .mastodon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  margin: 0 0.2rem;
+  border-radius: 4px;
+  color: #F5A9B8;
+  text-decoration: none;
+  filter:
+    drop-shadow(0 0 3px rgba(91, 206, 250, 0.9))
+    drop-shadow(0 0 6px rgba(245, 169, 184, 0.7));
+  transition: transform 0.2s ease;
+}
+
+.md-header .mastodon-link svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  overflow: visible;
+}
+
+.md-header .mastodon-link:hover,
+.md-header .mastodon-link:focus-visible {
+  transform: scale(1.12) rotate(4deg);
+  outline: 1px dashed #5BCEFA;
+  outline-offset: 2px;
+}
+

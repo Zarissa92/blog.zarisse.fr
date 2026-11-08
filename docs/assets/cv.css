@@ -1,0 +1,142 @@
+/* ===== CV — thème Matrix aux couleurs trans ===== */
+
+/* Couleurs : bleu, rose, blanc du drapeau trans
+   (valeurs par défaut, valables pour le schéma "matrix" et tout thème sombre) */
+.cv {
+  --cv-blue: #5bcefa;
+  --cv-pink: #f5a9b8;
+  --cv-white: #ffffff;
+  --cv-blue-soft: rgba(91, 206, 250, 0.12);
+  --cv-pink-soft: rgba(245, 169, 184, 0.12);
+  --cv-muted: rgba(255, 255, 255, 0.6);
+}
+/* Version claire : teintes plus soutenues pour rester lisibles */
+[data-md-color-scheme="default"] .cv {
+  --cv-blue: #1a8fc4;
+  --cv-pink: #d1567a;
+  --cv-white: #5a5a6e;
+  --cv-blue-soft: rgba(26, 143, 196, 0.10);
+  --cv-pink-soft: rgba(209, 86, 122, 0.10);
+  --cv-muted: rgba(0, 0, 0, 0.55);
+}
+
+/* En-tête : titre en dégradé bleu → rose → blanc → rose → bleu */
+.cv h1 {
+  margin-bottom: 0.2em;
+  font-weight: 700;
+  background: linear-gradient(90deg,
+    var(--cv-blue), var(--cv-pink), var(--cv-white), var(--cv-pink), var(--cv-blue));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 10px var(--cv-pink-soft));
+}
+.cv .cv-subtitle {
+  margin-top: 0;
+  font-family: var(--md-code-font-family);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cv-muted);
+}
+
+/* Étiquettes : alternance bleu / rose */
+.cv .cv-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1rem 0 1.5rem;
+}
+.cv .cv-tags span {
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--cv-blue);
+  border-radius: 999px;
+  font-family: var(--md-code-font-family);
+  font-size: 0.7rem;
+  color: var(--cv-blue);
+  background: var(--cv-blue-soft);
+}
+.cv .cv-tags span:nth-child(even) {
+  border-color: var(--cv-pink);
+  color: var(--cv-pink);
+  background: var(--cv-pink-soft);
+}
+
+/* Titres de section façon terminal, soulignés aux couleurs du drapeau */
+.cv h2 {
+  font-family: var(--md-code-font-family);
+  font-size: 1.05rem;
+  color: var(--cv-blue);
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg,
+    var(--cv-blue), var(--cv-pink), var(--cv-white), var(--cv-pink), var(--cv-blue)) 1;
+}
+.cv h2::before {
+  content: "> ";
+  color: var(--cv-pink);
+}
+
+/* Frise chronologique : ligne dégradée, points alternés */
+.cv .cv-job {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 1.2rem;
+  border-left: 2px solid transparent;
+  border-image: linear-gradient(180deg, var(--cv-blue), var(--cv-pink)) 1;
+}
+.cv .cv-job h3 {
+  margin: 0.8em 0 0.1em;
+}
+.cv .cv-job h3::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  margin-top: 0.45em;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--cv-blue);
+  box-shadow: 0 0 8px var(--cv-blue);
+}
+.cv .cv-job:nth-of-type(even) h3::before {
+  background: var(--cv-pink);
+  box-shadow: 0 0 8px var(--cv-pink);
+}
+.cv .cv-meta {
+  display: block;
+  font-family: var(--md-code-font-family);
+  font-size: 0.75rem;
+  color: var(--cv-muted);
+}
+
+/* Cartes de compétences et projets */
+.cv .grid.cards > ul > li {
+  border-color: var(--cv-blue-soft);
+  background: var(--md-default-bg-color);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.cv .grid.cards > ul > li:nth-child(even) {
+  border-color: var(--cv-pink-soft);
+}
+.cv .grid.cards > ul > li:hover {
+  border-color: var(--cv-blue);
+  box-shadow: 0 0 12px var(--cv-blue-soft);
+}
+.cv .grid.cards > ul > li:nth-child(even):hover {
+  border-color: var(--cv-pink);
+  box-shadow: 0 0 12px var(--cv-pink-soft);
+}
+.cv .grid.cards .twemoji {
+  color: var(--cv-blue);
+}
+.cv .grid.cards > ul > li:nth-child(even) .twemoji {
+  color: var(--cv-pink);
+}
+.cv .grid.cards hr {
+  border-color: var(--cv-pink-soft);
+}
+
+.cv .cv-line {
+  margin: 0.3rem 0;
+}
