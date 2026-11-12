@@ -8,6 +8,7 @@ date:
 que j'utilise pour ce site :
 
 - [Debian](https://www.debian.org/)
+     - Avec les mises a jours activés, et auto [c'est mieux](https://jordanchapuy.com/posts/2026/11/mise-a-jour-automatique-debian/).
 - [nginx](https://www.nginx.com/)
 - [nginx-rtmp](https://www.nginx.com/resources/wiki/modules/rtmp/)
 - [fail2ban](https://www.fail2ban.org/)
@@ -17,7 +18,7 @@ que j'utilise pour ce site :
 - des scripts pythons pour me faciliter le deploiement en parallele avec vscodium
 
 
-## sur le serveur
+## Sur le serveur
 
 tourne egalement :
 
