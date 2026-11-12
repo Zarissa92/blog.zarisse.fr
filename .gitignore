@@ -5,12 +5,27 @@ site/
 venv_blog/
 __pycache__/
 *.pyc
+*.pyo
+*.egg-info/
 
 # Caches de build (images de partage, empreintes, Zensical)
 .cache/
 
-# Fichiers de dossier KDE (Dolphin)
+# Données générées (caches wikipick, téléchargements)
+donnees/
+
+# Résultats de tools (graphify)
+graphify-out/
+
+# Fichiers système et éditeur
 .directory
+.DS_Store
+*.swp
+*~
+
+# Fichiers locaux (notes, brouillons)
+CLAUDE.md
+INdex>HTML/claude.md
 
 # Images téléchargées par wikipick (lourdes, se retéléchargent)
 docs/assets/img/

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Construit le site : dates des pages (dater_pages.py), Zensical, dates des flux
+"""Construit le site : index.md manquants des dossiers (index_dossiers.py), dates des pages (dater_pages.py), Zensical, dates des flux
 (post_build_dates.py), contrôle des flux RSS, puis balises Open Graph (post_build_og.py).
 
 Les flux RSS sont produits par le plugin `rss` de Zensical (zensical.toml) ;
 l'étape « Flux RSS » vérifie qu'ils existent, sont du XML valide et contiennent des articles.
 
-Usage : python3 build.py [--forcer] [--serve]
+Usage : venv_blog/bin/python build.py [--forcer] [--serve]
 Les images de partage ne sont refaites que si leur contenu a changé ;
 --forcer les régénère toutes (voir empreintes.py).
 --serve : après le build, sert site/ sur http://localhost:8000 (Ctrl+C pour arrêter).
@@ -28,9 +28,11 @@ FLUX_RSS = ["feed_rss_created.xml", "feed_rss_updated.xml"]
 FEUILLE_STYLE = "rss.xsl"
 ADRESSE_SERVE = ("127.0.0.1", 8000)
 
-sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "scripts" / "build"))
 import billets_index  # noqa: E402
 import dater_pages  # noqa: E402
+import index_dossiers  # noqa: E402
+import nav_ordre  # noqa: E402
 import post_build_dates  # noqa: E402
 import post_build_og  # noqa: E402
 import post_build_og_images  # noqa: E402
@@ -96,13 +98,22 @@ def servir() -> int:
 
 
 def main() -> int:
+    print("==> Index des dossiers")
+    # crée l'index.md des dossiers de docs/ qui n'en ont pas, et ajoute les marqueurs de liste aux index qui ne les ont pas
+    index_dossiers.main(appliquer=True)
+
     print("==> Dates des pages")
     # ajoute date (création / modification) au front matter des pages qui n'en ont pas encore
     dater_pages.main(appliquer=True, silencieux=True)
 
     print("==> Liste des billets")
-    # remplace la liste entre les marqueurs de docs/Billets2Blog/index.md (voir billets_index.py)
+    # remplace la liste entre les marqueurs de chaque index.md de docs/ (voir billets_index.py)
     if billets_index.main() != 0:
+        return 1
+
+    print("==> Ordre de la navigation")
+    # poids `weight` du front matter : la barre latérale affiche le plus récent en premier (voir nav_ordre.py)
+    if nav_ordre.main(appliquer=True, silencieux=True) != 0:
         return 1
 
     print("==> Build Zensical")

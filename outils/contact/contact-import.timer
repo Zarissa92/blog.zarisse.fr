@@ -1,0 +1,14 @@
+# Déclenche contact-import.service toutes les 5 minutes.
+# Installé par deploy_contact.sh (install et maj).
+
+[Unit]
+Description=Import des commentaires validés toutes les 5 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+AccuracySec=10s
+Unit=contact-import.service
+
+[Install]
+WantedBy=timers.target

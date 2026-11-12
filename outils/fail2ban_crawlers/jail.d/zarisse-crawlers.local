@@ -1,0 +1,39 @@
+# Jails anti-robots pour blog.zarisse.fr — Debian 13, nginx, fail2ban.
+#
+# Le ban passe par nginx (banaction = nginx-geo-ban, installé par f2b.sh) :
+# l'IP est ajoutée à /etc/nginx/banned_ips.conf et reçoit la page 403
+# « Tu es banni ». Aucune règle iptables/nftables.
+#
+# Rappel : le réseau local est exclu des journaux d'accès nginx
+# (outils/nginx/exclure_lan_nginx.py), donc ta propre navigation n'est JAMAIS comptée
+# ni bannie — et tu ne peux pas tester ces jails depuis le LAN.
+
+[zarisse-scans]
+enabled   = true
+filter    = zarisse-scans
+logpath   = /var/log/nginx/access.log
+port      = http,https
+protocol  = tcp
+banaction = nginx-geo-ban
+# Une seule tentative suffit : ces chemins n'existent pas sur un site statique.
+maxretry  = 1
+findtime  = 1d
+bantime   = 7d
+ignoreip  = 127.0.0.1/8 ::1 192.168.1.0/24
+
+[zarisse-cadence]
+enabled   = true
+filter    = zarisse-cadence
+logpath   = /var/log/nginx/access.log
+port      = http,https
+protocol  = tcp
+banaction = nginx-geo-ban
+# 30 pages HTML en 60 secondes : hors de portée d'une lectrice humaine,
+# atteint en quelques secondes par un aspirateur. Baisse à 15 pour durcir,
+# monte à 60 si tu vois un faux positif.
+maxretry  = 30
+findtime  = 60
+bantime   = 7d
+ignoreip  = 127.0.0.1/8 ::1 192.168.1.0/24
+# Décommente pour doubler la durée à chaque récidive (7 j, 14 j, 28 j…) :
+# bantime.increment = true

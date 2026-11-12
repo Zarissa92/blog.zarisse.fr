@@ -2,14 +2,14 @@
 site_name = "Blog de Zaza"
 site_url = "https://blog.zarisse.fr/"
 site_author = "Zaza"
-site_description = "Blog de Zaza : logiciels libres, luttes sociales, anarchie, piraterie et vie trans."
+site_description = "ZaZaZone : Logiciels libres, luttes sociales, anarchie, et ma vie de personne trans."
 copyright = "Copyright &copy; 2026 Zarisse"
 docs_dir = "docs"
 site_dir = "site"
 
 # cv.css après pluie.css pour qu'il puisse s'appuyer sur ses variables
 extra_css = ["assets/pluie.css", "assets/cv.css", "assets/collection.css", "assets/menu.css", "assets/accueil.css", "assets/rss.css", "assets/mastodon.css", "assets/titre.css"]
-extra_javascript = ["assets/pluie.js"]
+# Plus de JavaScript : la pluie est en CSS pur (overrides/partials/pluie.html + pluie.css)
 [project.theme]
 language = "fr"
 # Équivalent de `custom_dir: overrides` (ancien mkdocs.yml).
@@ -21,7 +21,7 @@ custom_dir = "overrides"
 logo = "assets/avatar.jpg"
 # Même photo pour l'icône de l'onglet du navigateur
 favicon = "assets/favicon-progress.svg"
-# Pas de police Google par défaut : la police vient de pluie.css
+# Pas de police Google : Russo One est servie depuis docs/assets/fonts/ (déclarée dans pluie.css)
 font = false
 
 features = [
@@ -72,10 +72,18 @@ pymdownx.tabbed.alternate_style = true
 pymdownx.tasklist.custom_checkbox = true
 pymdownx.tilde = {}
 
+# Tri de la navigation d'après le champ `weight` du front matter (écrit par scripts/build/nav_ordre.py) :
+# le plus récent en haut. reverse = false : le poids négatif de la date récente la fait monter.
+[project.plugins.mkdocs-nav-weight]
+enabled = true
+reverse = false
+
 [project.plugins.rss]
 enabled = true
 feed_title = "Blog de Zaza"
-length = 20
+# 40 et non 20 : post_build_dates.py retire les pages d'index (index.md) des flux,
+# puis ne garde que les 20 articles les plus récents.
+length = 40
 match_path = ".*"
 
 # Liens externes ouverts dans un nouvel onglet (toutes les pages, y compris wikipick).

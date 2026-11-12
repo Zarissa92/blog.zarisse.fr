@@ -3,12 +3,24 @@
   {{ super() }}
   <link rel="alternate" type="application/rss+xml" title="Blog de Zaza" href="{{ 'feed_rss_created.xml' | url }}">
 {% endblock %}
+{#- Pluie en CSS pur, posée juste avant l'en-tête, derrière tout le site -#}
+{% block header %}
+  {% include "partials/pluie.html" %}
+  {{ super() }}
+{% endblock %}
 {% block content %}
   {% if page.meta.date %}
   {% set d = page.meta.date %}
   {% set cree = d.created | string %}
   {% set maj = d.updated | string if d.updated else cree %}
-  <p class="page-date">Créée le {{ cree[8:10] }}/{{ cree[5:7] }}/{{ cree[0:4] }}{% if maj != cree %} · modifiée le {{ maj[8:10] }}/{{ maj[5:7] }}/{{ maj[0:4] }}{% endif %}</p>
+  {#- « AAAA-MM-JJ HH:MM » (heure française, écrite par dater_pages.py) -> « 10/11/2026 à 21h14 » ; sans heure : date seule -#}
+  {% macro date_fr(v) %}{{ v[8:10] }}/{{ v[5:7] }}/{{ v[0:4] }}{% if v | length >= 16 %} à {{ v[11:13] }}h{{ v[14:16] }}{% endif %}{% endmacro %}
+  <p class="page-date">Créée le {{ date_fr(cree) }}{% if maj != cree %} · modifiée le {{ date_fr(maj) }}{% endif %}</p>
   {% endif %}
   {{ super() }}
+  {#- Commentaires sous les articles : nginx (SSI) remplace ce repère par outils/contact/contact.py -#}
+  {#- Pas sous les pages d'index (elles ont le repère « billets:debut ») -#}
+  {% if page.meta.date and 'billets:debut' not in page.content %}
+  <!--#include virtual="/commentaire?article={{ page.url | urlencode }}" -->
+  {% endif %}
 {% endblock %}

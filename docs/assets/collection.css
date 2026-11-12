@@ -82,15 +82,15 @@
 .wp-rarete { font-size: calc(.6rem * var(--wp-echelle-texte)); }
 .md-typeset .wp-corps summary { white-space: nowrap; }
 
-/* Collection wiki-pick — accordée à la pluie matricielle aux couleurs trans */
+/* Collection wiki-pick — thème de gauchiasses.fr (cartes opaques, angles droits, Russo One), couleurs trans */
 :root {
   --wp-bleu: #5bcefa;
   --wp-rose: #f5a9b8;
   --wp-blanc: #ffffff;
-  --wp-fond: rgba(5, 8, 12, .72);       /* translucide : la pluie reste visible derrière */
+  --wp-fond: #08080a;                   /* opaque, comme les cartes de gauchiasses.fr (lisibilité) */
   --wp-drapeau: linear-gradient(135deg, var(--wp-bleu) 0%, var(--wp-rose) 30%,
                 var(--wp-blanc) 50%, var(--wp-rose) 70%, var(--wp-bleu) 100%);
-  --wp-police: ui-monospace, "Fira Code", "JetBrains Mono", Consolas, monospace;
+  --wp-police: "Russo One", "Courier New", monospace;
 }
 
 .wp-grille, .wp-albums {
@@ -105,10 +105,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  border-radius: .9rem;
+  border-radius: 0;
   background: var(--wp-fond);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
   overflow: hidden;
   transition: transform .15s, box-shadow .15s;
 }

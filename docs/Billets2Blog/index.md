@@ -1,13 +1,13 @@
 ---
 date:
-  created: 2026-11-08
-  updated: 2026-11-08
+  created: 2026-11-08 15:17
+  updated: 2026-11-10 23:57
 ---
-# Billets
-
-Pourquoi ? Why not ?
 
 <!-- billets:debut -->
-- 08/11/2026 — [Le nom du fichier md](testouillasse.md)
-- 08/11/2026 — [Le JDH](JDH.md)
+- 10/11/2026 — [humeur_0](humeur_0.md)
+
+**Sections :**
+
+- [Vracs Linux](VracsLinux/index.md)
 <!-- billets:fin -->

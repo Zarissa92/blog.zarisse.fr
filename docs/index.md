@@ -4,7 +4,7 @@ description: "Blog de Zaza : logiciels libres, luttes sociales, anarchie, pirate
 og_image: "assets/partage.jpg"
 date:
   created: 2026-11-07
-  updated: 2026-11-08
+  updated: 2026-11-10 23:57
 ---
 
 <div class="accueil" markdown="1">
@@ -13,7 +13,7 @@ date:
 
 <img class="accueil-avatar" src="assets/avatar.jpg" alt="Photo de profil" width="120" height="120">
 
-<p class="accueil-accroche">Logiciels libres, luttes sociales, anarchie, piraterie et vie trans.</p>
+<p class="accueil-accroche">Logiciels libres, luttes sociales, anarchie, et ma vie de personne trans.</p>
 
 </div>
 
@@ -80,3 +80,10 @@ Ce site tourne sur un vieux lenovo, qui tient encore,
 </div>
 
 </div>
+
+<!-- billets:debut -->
+**Sections :**
+
+- [Billets2Blog](Billets2Blog/index.md)
+- [Divers](divers/index.md)
+<!-- billets:fin -->

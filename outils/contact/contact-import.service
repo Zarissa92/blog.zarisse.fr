@@ -1,0 +1,29 @@
+# Modèle d'unité systemd : importe les commentaires validés (contact.py importer).
+# Déclenché toutes les 5 minutes par contact-import.timer. Ne pas installer tel quel :
+# deploy_contact.sh remplace les __MARQUEURS__ et l'installe.
+
+[Unit]
+Description=Import des commentaires validés (contact.py importer)
+After=network.target
+
+[Service]
+Type=oneshot
+User=__UTILISATEUR__
+Group=__UTILISATEUR__
+WorkingDirectory=__PROJET__/outils/contact
+ExecStart=__PROJET__/venv_blog/bin/python contact.py importer
+Environment=PYTHONDONTWRITEBYTECODE=1
+
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=__HOME__/contact
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictAddressFamilies=AF_UNIX
+RestrictNamespaces=yes
+LockPersonality=yes
+CapabilityBoundingSet=

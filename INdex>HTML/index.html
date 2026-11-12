@@ -1,273 +1,983 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <a rel="me noopener noreferrer" href="https://tech.lgbt/@zarisse" target="_blank">Mastodon</a>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
   <title>Zaza_Zone</title>
   <link rel="icon" type="image/svg+xml" href="/favicon-progress.svg">
+  <link rel="me" href="https://tech.lgbt/@zarisse">
 
+  <!-- Thème repris de gauchiasses.fr (noir, panneau opaque, Russo One, pluie en CSS pur),
+       mais la pluie garde uniquement les couleurs du drapeau trans. -->
   <style>
+    @font-face { font-family: "Russo One"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/russo-one.woff2") format("woff2"); }
+
     :root {
-      /* Couleurs du drapeau transgenre */
+      --texte: #ffffff;
+      --bord: #ffffff;
+      --fond: #000;
+      --panneau: #0a0000;
+      /* Drapeau trans : pluie et accents */
       --bleu: #5bcefa;
       --rose: #f5a9b8;
-      --blanc: #ffffff;
-
-      /* Texte en violet flat */
-      --violet: #9b59b6;
-      --violet-doux: #c39bd3;
-
-      --fond-cadre: rgba(8, 6, 12, 0.9);
-      --cadre: rgba(91, 206, 250, 0.7);
-      --cadre-rose: rgba(245, 169, 184, 0.5);
+      --r-tete: #ffffff;
+      --r-haut: #5bcefa;
+      --r-moyen: #f5a9b8;
+      --police: "Russo One", "Courier New", monospace;
     }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     html, body {
-      margin: 0;
       min-height: 100%;
-      background: #000;
-      color: var(--violet);
-      font-family: "Fira Code", "Consolas", "Courier New", monospace;
+      background: var(--fond);
+      color: var(--texte);
+      font-family: var(--police);
+      overflow-x: hidden;
     }
-    ::selection {
-      background: rgba(245, 169, 184, 0.35);
-      color: var(--blanc);
+    ::selection { background: var(--rose); color: #000; }
+
+    /* ===== Pluie en CSS pur, couleurs du drapeau trans uniquement ===== */
+    #pluie { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    #pluie i {
+      position: absolute; top: 0;
+      font: normal 16px/1.15 monospace; white-space: pre; text-align: center;
+      color: transparent;
+      background: linear-gradient(to top, var(--r-tete) 0, var(--r-haut) 6%, color-mix(in srgb, var(--r-moyen) 55%, transparent) 45%, transparent 100%);
+      -webkit-background-clip: text; background-clip: text;
+      transform: translateY(-100%);
+      animation-name: chute; animation-timing-function: linear; animation-iteration-count: infinite;
+      will-change: transform;
     }
-    #pluie {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-    }
+    @keyframes chute { from { transform: translateY(-100%); } to { transform: translateY(100vh); } }
+
+    /* ===== Panneau (opaque, sans flou : choix de lisibilité de gauchiasses.fr) ===== */
     main {
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 1;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      box-sizing: border-box;
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem 16px;
     }
-    .cadre {
-      width: 100%;
-      max-width: 680px;
-      max-height: calc(100vh - 32px);
-      overflow-y: auto;
-      box-sizing: border-box;
-      padding: 28px 32px;
-      background: var(--fond-cadre);
-      border: 1px solid var(--cadre);
-      border-radius: 6px;
-      box-shadow:
-        0 0 24px rgba(91, 206, 250, 0.22),
-        0 0 40px rgba(245, 169, 184, 0.12),
-        inset 0 0 18px rgba(245, 169, 184, 0.07);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
-      line-height: 1.6;
-      font-size: 17px;
-      scrollbar-color: var(--rose) transparent;
+    .panel {
+      width: 100%; max-width: 560px;
+      padding: 2.5rem 2rem;
+      background: var(--panneau);
+      border: 1px solid var(--bord);
+      box-shadow: 0 0 30px color-mix(in srgb, var(--bord) 35%, transparent), inset 0 0 20px color-mix(in srgb, var(--bord) 10%, transparent);
+      text-align: center;
+      line-height: 1.5;
     }
-    .cadre h1 {
-      margin-top: 0;
-      font-size: 1.8em;
-      color: var(--bleu);
-      text-shadow: 0 0 8px rgba(91, 206, 250, 0.6);
-      padding-bottom: 8px;
-      /* Liseré aux 5 bandes du drapeau */
-      border-bottom: 3px solid;
-      border-image: linear-gradient(
-        90deg,
-        var(--bleu) 0 20%,
-        var(--rose) 20% 40%,
-        var(--blanc) 40% 60%,
-        var(--rose) 60% 80%,
-        var(--bleu) 80% 100%
-      ) 1;
+
+    .panel h1 {
+      font-size: clamp(1.6rem, 6vw, 2.4rem); line-height: 1.2;
+      margin-bottom: 1.5rem; text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 0 5px #fff, 0 0 15px var(--bleu), 0 0 35px var(--rose);
+      animation: flicker 4s infinite;
     }
-    .cadre h2 {
-      color: var(--bleu);
-      font-size: 1.2em;
-      margin-top: 1.6em;
-      border-bottom: 1px dashed var(--cadre-rose);
-      padding-bottom: 4px;
+    .panel h2 {
+      font-size: 1rem; text-transform: uppercase; letter-spacing: .08em;
+      margin: 1.8rem 0 .8rem; padding-bottom: .3rem;
+      border-bottom: 1px solid var(--bord);
     }
-    .cadre h3,
-    .cadre h4 {
-      color: var(--rose);
+    .panel p { margin: .8rem 0; }
+
+    /* Les listes de liens deviennent les boutons de gauchiasses.fr */
+    .panel ul { list-style: none; display: flex; flex-direction: column; gap: .75rem; }
+    .panel a { color: var(--texte); }
+    /* photo de profil, cerclée aux couleurs du drapeau */
+    .avatar {
+      display: block; margin: 0 auto 16px;
+      width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+      border: 3px solid var(--bleu);
+      box-shadow: 0 0 0 3px var(--rose), 0 0 18px rgba(91, 206, 250, .45), 0 0 28px rgba(245, 169, 184, .3);
     }
-    .cadre strong {
-      color: var(--violet-doux);
+    .panel li a, .panel a[href^="mailto:"] {
+      display: block; padding: .8rem 1rem;
+      text-decoration: none; text-align: center;
+      border: 1px solid var(--bord);
+      transition: all .2s ease;
+      overflow-wrap: anywhere;
     }
-    .cadre a {
-      color: var(--rose);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(245, 169, 184, 0.4);
+    .panel li a::before, .panel a[href^="mailto:"]::before { content: ">"; opacity: .6; margin-right: .5rem; }
+    .panel a:hover, .panel a:focus-visible {
+      background: var(--texte); color: #000;
+      box-shadow: 0 0 20px var(--bleu); outline: none;
     }
-    .cadre a:hover,
-    .cadre a:focus {
-      color: var(--blanc);
-      border-bottom-color: var(--blanc);
+
+    .panel::after {
+      content: "_"; display: block; margin-top: 1.5rem; font-size: 1.4rem;
+      animation: blink 1s steps(1) infinite;
     }
-    .cadre ul { padding-left: 1.2em; }
-    .cadre li { margin: 0.4em 0; }
-    .cadre li::marker { color: var(--bleu); }
-    .cadre code {
-      background: rgba(245, 169, 184, 0.1);
-      color: var(--rose);
-      padding: 1px 5px;
-      border-radius: 3px;
-    }
-    .cadre pre {
-      border: 1px solid var(--cadre);
-      border-radius: 6px;
-      padding: 12px 14px;
-      overflow-x: auto;
-      background: rgba(16, 14, 22, 0.8);
-    }
-    .cadre pre code {
-      background: none;
-      color: var(--violet-doux);
-      padding: 0;
-    }
-    .cadre blockquote {
-      margin: 1em 0;
-      padding: 6px 14px;
-      border-left: 3px solid var(--rose);
-      color: var(--violet-doux);
-      background: rgba(44, 40, 52, 0.5);
-      border-radius: 0 4px 4px 0;
-    }
-    .cadre hr {
-      border: none;
-      border-top: 1px solid var(--cadre-rose);
-    }
-    .cadre p { margin: 0.8em 0; }
-    @media (max-width: 600px) {
-      .cadre { padding: 20px 18px; font-size: 16px; }
-    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+    @keyframes flicker { 0%, 92%, 100% { opacity: 1; } 93% { opacity: .4; } 95% { opacity: 1; } 96% { opacity: .6; } }
+
+    @media (max-width: 480px) { .panel { padding: 2rem 1.2rem; } }
     @media (prefers-reduced-motion: reduce) {
-      #pluie { opacity: 0.35; }
+      #pluie i { animation: none; transform: translateY(20vh); }
+      .panel h1, .panel::after { animation: none; }
     }
   </style>
 </head>
 <body>
-  <canvas id="pluie" aria-hidden="true"></canvas>
-
+<div id="pluie" aria-hidden="true">
+<i style="left:0.22%;animation-duration:3.8s;animation-delay:-4.4s">ケ
+=
+キ
+Z
+=
+9
+カ
+C
+2
+ウ
+イ
+カ
+セ
+ソ
+7
+D
+イ
+A
+ス
++
+X</i>
+<i style="left:2.82%;animation-duration:6.1s;animation-delay:-7.2s">ア
+&lt;
+サ
+*
+2
+ニ
+ツ
+コ
+セ
+&lt;
+ニ
+キ
+カ
+ノ
+キ
+ヌ
+ヌ
+D
+チ
+ウ
+-
+4</i>
+<i style="left:5.06%;animation-duration:9.4s;animation-delay:-6.1s">F
+E
+ネ
+B
+ス
++
+オ
+ウ
+Y
+ソ
+&gt;
+テ
+カ
+ソ
+キ
+ノ
+ツ
+4
+F
+ネ
+サ
+ネ
+ヌ</i>
+<i style="left:7.04%;animation-duration:5.2s;animation-delay:-15.0s">D
+F
+サ
+9
+-
+タ
+サ
+4
+ノ
+ツ
+F
+*
+A
+ソ
+Z
+ナ</i>
+<i style="left:10.55%;animation-duration:8.3s;animation-delay:-3.7s">ナ
+0
+ツ
+オ
+セ
+B
++
+ナ
+セ
+X
+6
+0
+X
+4
+コ</i>
+<i style="left:12.12%;animation-duration:5.1s;animation-delay:-9.0s">=
+C
+2
+C
+0
+ネ
+ソ
+ケ
+7
+6
+カ
+&lt;
+エ
+ク
+コ
+F
+サ
+Z
+2
+D
+オ
+ノ</i>
+<i style="left:14.81%;animation-duration:9.6s;animation-delay:-8.5s">Z
+-
+ク
+Z
+9
+&lt;
+ツ
+&gt;
+X
+ニ
+ク
+テ
+2
+サ</i>
+<i style="left:17.43%;animation-duration:9.3s;animation-delay:-14.0s">7
+&lt;
+シ
+7
+キ
+F
+ト
+F
+7
+D
+ス
+コ
+ネ
+&lt;
+サ
+9
+&gt;
+8
+ア
+D
+ナ
+6</i>
+<i style="left:19.23%;animation-duration:9.2s;animation-delay:-14.1s">タ
+エ
+タ
+B
+カ
+カ
+-
+6
+オ
+&lt;
+9
+&gt;
+ケ
+ケ
+Y
+5
+A
+サ
+チ
+8
+D
+2
+セ</i>
+<i style="left:23.19%;animation-duration:8.1s;animation-delay:-11.0s">0
+Y
+X
+ネ
+3
+8
+3
+ク
+タ
+ソ
+オ
+ニ
+イ
+C
+A
+ソ
+C
+ソ
+ア
+オ
++
+F
+エ</i>
+<i style="left:24.57%;animation-duration:9.0s;animation-delay:-13.8s">7
+タ
+ツ
+Y
+6
+セ
+9
+ケ
+-
+B
+B
+5
+タ
+5
+1
+ス</i>
+<i style="left:26.85%;animation-duration:7.6s;animation-delay:-5.7s">4
+-
+エ
+Z
+X
+X
+キ
+エ
+0
+-
+ニ
+キ
+タ
+ス
+ス
+9
+3
+ケ
+2
+シ
+ツ
+4
+タ
+オ
+3
+A
+キ</i>
+<i style="left:29.28%;animation-duration:9.6s;animation-delay:-13.4s">&lt;
+タ
+サ
+1
+6
+5
+セ
+0
+エ
+サ
+ノ
+ア
+ノ
+チ
+4
+テ</i>
+<i style="left:32.38%;animation-duration:9.3s;animation-delay:-15.9s">コ
+ス
+テ
+セ
+エ
+C
+=
+9
+エ
+=
+ナ
+エ
+エ
+C
+5
+7
+8
+サ
+エ
+7
+カ
+シ
+オ
+D
+オ
+Z
+タ
+0
+ク</i>
+<i style="left:35.71%;animation-duration:7.0s;animation-delay:-9.3s">E
+カ
+1
+Y
+C
+B
+8
+ナ
+チ
+セ
+Y
++
+ナ
+タ
+チ</i>
+<i style="left:37.33%;animation-duration:7.6s;animation-delay:-4.8s">&lt;
+オ
+ア
+4
+E
+B
+キ
+オ
+9
+セ
+7
+チ
+ケ
+ヌ
+オ
+タ
+ネ
+テ
+サ
+3
+9
++
+ト
+E</i>
+<i style="left:40.77%;animation-duration:8.4s;animation-delay:-8.5s">Y
+キ
+ケ
+チ
+ク
+キ
+=
+A
+コ
+ツ
+テ
+D
+セ
++
+ニ
+セ
+Z
+F
+チ
+7
+6
+チ
+エ</i>
+<i style="left:41.85%;animation-duration:6.1s;animation-delay:-4.4s">ニ
+&gt;
+ケ
+F
+チ
+サ
+=
+3
+A
++
+2
+A
+ア
+ク</i>
+<i style="left:44.32%;animation-duration:8.9s;animation-delay:-14.5s">ネ
+C
+A
+コ
+2
+ケ
+ウ
+ト
+ネ
+ウ
+ヌ
+セ
+Z
+タ
+Y</i>
+<i style="left:46.86%;animation-duration:8.3s;animation-delay:-14.1s">E
+=
+コ
+タ
+サ
+シ
+1
+イ
+シ
+=
+ニ
+1
+Y
+=
+タ
+ツ
+サ
+*
+キ
+ノ
+ウ
+5
+ソ
+ス
+4
+ヌ
+ト</i>
+<i style="left:50.51%;animation-duration:8.8s;animation-delay:-3.6s">0
+ニ
+ツ
+オ
+&gt;
+ツ
+ヌ
+X
+7
+0
+Z
+9
+ニ
+イ
+ク
+チ
+シ
+C
+チ
+ウ</i>
+<i style="left:51.87%;animation-duration:6.2s;animation-delay:-11.7s">2
+D
+7
+ク
+ノ
+B
+ス
+チ
+ウ
++
+2
+ア
+8
+9
+Z
+-
+=
+=
+Y
+ス
+ネ
+2
+オ
+Y</i>
+<i style="left:55.67%;animation-duration:7.3s;animation-delay:-10.6s">-
+ト
+7
+ト
+Y
+1
+ナ
+0
+*
+テ
+A
+ケ
+ス
+1
+Y
+ノ
+Z</i>
+<i style="left:57.9%;animation-duration:4.6s;animation-delay:-9.1s">A
+ア
+ト
+テ
+セ
+2
+C
+D
+X
+ナ
+4
+3
+3
+Z
+セ
+7
+5
+=
+サ
+Y
+カ
+テ
+7
+Y
+F
+E</i>
+<i style="left:59.74%;animation-duration:8.5s;animation-delay:-12.0s">ソ
+ス
+コ
+イ
+ウ
+タ
+5
+E
+&gt;
+オ
+4
+1
+F
+B
+ス
++
+*
+ノ
+6
+0
+タ
+コ
+X</i>
+<i style="left:62.8%;animation-duration:9.0s;animation-delay:-13.8s">&gt;
+2
+ソ
+シ
+*
+8
+4
+エ
+A
+タ
+ク
+4
+ケ
+4
+Y
+8
+A</i>
+<i style="left:65.15%;animation-duration:9.3s;animation-delay:-14.3s">2
+A
+3
+サ
+=
+5
+3
+チ
+&lt;
+タ
+F
+ツ
+&gt;
+&gt;
+8
+6
+F
+タ
+ツ
+3
+オ
++
+テ
+タ
+ツ
+ニ
+ナ
+9
+カ
+ケ</i>
+<i style="left:66.94%;animation-duration:5.9s;animation-delay:-2.4s">オ
+1
+1
+ニ
+9
+4
+1
+エ
+セ
+1
+ノ
+&gt;
+C
+*
+イ
+&lt;
+B
+ノ
+5
+ア</i>
+<i style="left:70.71%;animation-duration:5.4s;animation-delay:-6.2s">9
+=
+=
+9
+D
+ソ
+6
+ソ
+ツ
+2
+6
+イ
+ノ
+ニ
+Y
+Z
+0
+-
+サ
+4
+ケ
+E
+9
+イ
+0
+C
+B</i>
+<i style="left:72.76%;animation-duration:4.1s;animation-delay:-6.9s">シ
+エ
+チ
+ノ
+ナ
+セ
+4
+ナ
+ニ
+&lt;
+ノ
+ツ
+&lt;
+1
+チ
+カ
+5
+イ
+=
+9
+エ
+ヌ
+ソ
+X
+オ
+&gt;
+X
+ウ</i>
+<i style="left:75.41%;animation-duration:9.3s;animation-delay:-3.2s">E
+コ
+タ
+ケ
+5
+Y
+ク
+B
+セ
+4
+*
+チ
+&gt;
+ネ</i>
+<i style="left:76.97%;animation-duration:7.2s;animation-delay:-12.0s">&gt;
+サ
+ト
+キ
+C
+イ
+ト
+B
+Z
+ノ
+0
++
+ス
+オ
+C
+*
+F</i>
+<i style="left:79.59%;animation-duration:7.8s;animation-delay:-4.8s">B
+ウ
+ヌ
+9
+2
+Y
+ネ
+オ
+7
+X
+ニ
+ア
+1
+6
+キ
+2
+ネ</i>
+<i style="left:82.72%;animation-duration:8.6s;animation-delay:-11.3s">シ
+-
+8
+X
+ツ
+E
+9
+&gt;
+5
+4
+2
+-
+C
+ツ
+ナ
+タ
+カ
+ツ
+3
+タ
+&lt;
+4
+B
+E
+Y
+ノ
+ニ</i>
+<i style="left:84.25%;animation-duration:8.7s;animation-delay:-2.9s">ヌ
+チ
+ニ
+ツ
+D
+*
+ツ
+A
+ア
+8
+ス
+カ
+タ
+-
+1
+6
+A
+&lt;
+タ
+*</i>
+<i style="left:87.46%;animation-duration:7.9s;animation-delay:-7.2s">カ
+テ
+ソ
+0
+*
+タ
+ト
+Y
+C
+ネ
+5
+A
+8
+ヌ</i>
+<i style="left:89.88%;animation-duration:8.1s;animation-delay:-5.3s">ツ
+ト
+チ
+ソ
+ク
+-
+ス
+ナ
+ク
+=
+9
+&lt;
+*
+シ
+ス
+セ
+=
+5
+ツ
+-
+C
+&lt;
+8
+D
+テ
+キ
+ス
+テ</i>
+<i style="left:92.06%;animation-duration:4.7s;animation-delay:-0.2s">ツ
+ウ
+エ
+A
+テ
+*
+ケ
+F
+&lt;
+6
+キ
+ア
+B
+テ
+5
+5
+3
+ニ</i>
+<i style="left:94.49%;animation-duration:3.9s;animation-delay:-15.1s">ク
+オ
+0
+6
+オ
+B
+F
+Z
+エ
+コ
+コ
+B
+ト
+カ
+タ
+ク
+A
+&lt;
+1
+D
+D
+E
+ソ
+&gt;
+8
+ノ
+3
+3
+ト</i>
+<i style="left:98.08%;animation-duration:9.5s;animation-delay:-4.9s">E
+=
+キ
+&lt;
+セ
+F
+セ
+チ
+Y
+カ
+サ
+タ
+シ
+A
+オ</i>
+</div>
   <main>
-    <article class="cadre" id="contenu">Chargement…</article>
+    <article class="panel">
+      <img class="avatar" src="image.png" alt="Photo de profil" width="120" height="120">
+
+      <h1>Zone @ Zarisse</h1>
+
+      <ul>
+        <li><a href="https://blog.zarisse.fr" target="_blank" rel="noopener noreferrer">blog</a></li>
+        <li><a href="https://github.com/zarissa92" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="https://tech.lgbt/@zarisse" target="_blank" rel="me noopener noreferrer">Mastodon</a></li>
+        <li><a href="https://discord.gg/QSCfR2NHJ" target="_blank" rel="noopener noreferrer">Discord</a></li>
+      </ul>
+
+      <h2>Contact</h2>
+      <p><a href="mailto:frisk-expose-croak@duck.com">frisk-expose-croak@duck.com</a></p>
+    </article>
   </main>
-
-  <!-- Convertit le Markdown en HTML, directement dans le navigateur -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
-  <script>
-    // Charge contenu.md et l'affiche dans le cadre
-    (function () {
-      var zone = document.getElementById("contenu");
-      fetch("contenu.md", { cache: "no-cache" })
-        .then(function (reponse) {
-          if (!reponse.ok) throw new Error("HTTP " + reponse.status);
-          return reponse.text();
-        })
-        .then(function (texte) {
-          zone.innerHTML = marked.parse(texte);
-          // Chaque lien s'ouvre dans un nouvel onglet
-          zone.querySelectorAll("a[href]").forEach(function (lien) {
-            lien.setAttribute("target", "_blank");
-            lien.setAttribute("rel", "noopener noreferrer");
-          });
-        })
-        .catch(function () {
-          zone.textContent = "Impossible de charger le contenu. Ouvre ce site via un serveur web (pas en double-cliquant sur le fichier).";
-        });
-    })();
-  </script>
-
-  <script>
-    // Pluie matricielle aux couleurs du drapeau transgenre
-    (function () {
-      var canvas = document.getElementById("pluie");
-      var ctx = canvas.getContext("2d");
-
-      var DRAPEAU = ["#5bcefa", "#f5a9b8", "#ffffff", "#f5a9b8", "#5bcefa"];
-      // "bandes"    : 5 bandes horizontales comme le drapeau
-      // "colonnes"  : drapeau couché, une couleur par groupe de colonnes
-      // "aleatoire" : chaque goutte prend une couleur du drapeau au hasard
-      var MODE = "bandes";
-
-      var caracteres = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>/{}[]";
-      var taille = 18;
-      var gouttes = [];
-      var couleurGoutte = [];
-      var vitesseMax = (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) ? 0.3 : 1;
-
-      function couleurHasard() {
-        return DRAPEAU[Math.floor(Math.random() * DRAPEAU.length)];
-      }
-
-      function couleur(i, y) {
-        var n = DRAPEAU.length;
-        if (MODE === "bandes") {
-          return DRAPEAU[Math.max(0, Math.min(n - 1, Math.floor((y / window.innerHeight) * n)))];
-        }
-        if (MODE === "colonnes") {
-          return DRAPEAU[Math.min(n - 1, Math.floor((i / gouttes.length) * n))];
-        }
-        return couleurGoutte[i];
-      }
-
-      function initialiser() {
-        var ratio = window.devicePixelRatio || 1;
-        canvas.width = window.innerWidth * ratio;
-        canvas.height = window.innerHeight * ratio;
-        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-        var colonnes = Math.floor(window.innerWidth / taille);
-        gouttes = [];
-        couleurGoutte = [];
-        for (var i = 0; i < colonnes; i++) {
-          gouttes.push(Math.random() * -50);
-          couleurGoutte.push(couleurHasard());
-        }
-      }
-
-      function caractereAleatoire() {
-        return caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-      }
-
-      function dessiner() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
-        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-
-        ctx.font = taille + "px monospace";
-        for (var i = 0; i < gouttes.length; i++) {
-          var x = i * taille;
-          var y = gouttes[i] * taille;
-
-          // Tête de la goutte
-          ctx.fillStyle = couleur(i, y);
-          ctx.fillText(caractereAleatoire(), x, y);
-
-          // Caractère juste derrière, plus discret
-          ctx.fillStyle = couleur(i, y - taille);
-          ctx.globalAlpha = 0.6;
-          ctx.fillText(caractereAleatoire(), x, y - taille);
-          ctx.globalAlpha = 1;
-
-          if (y > window.innerHeight && Math.random() > 0.975) {
-            gouttes[i] = 0;
-            couleurGoutte[i] = couleurHasard();
-          } else {
-            gouttes[i] += (0.5 + Math.random() * 0.5) * vitesseMax;
-          }
-        }
-      }
-
-      initialiser();
-      window.addEventListener("resize", initialiser);
-      setInterval(dessiner, 33);
-    })();
-  </script>
 </body>
 </html>

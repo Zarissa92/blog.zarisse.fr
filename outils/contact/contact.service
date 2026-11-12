@@ -1,0 +1,34 @@
+# Modèle d'unité systemd du formulaire et des commentaires (contact.py).
+# Ne pas installer tel quel : deploy_contact.sh remplace les __MARQUEURS__ et l'installe.
+
+[Unit]
+Description=Formulaire de contact et commentaires (contact.py, écoute locale)
+After=network.target
+
+[Service]
+Type=simple
+User=__UTILISATEUR__
+Group=__UTILISATEUR__
+WorkingDirectory=__PROJET__/outils/contact
+ExecStart=__PROJET__/venv_blog/bin/python contact.py
+Environment=PYTHONDONTWRITEBYTECODE=1
+Restart=on-failure
+RestartSec=5
+
+# Durcissement : le script n'a besoin que de son dossier de données.
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=__HOME__/contact
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictAddressFamilies=AF_INET
+RestrictNamespaces=yes
+LockPersonality=yes
+CapabilityBoundingSet=
+
+[Install]
+WantedBy=multi-user.target

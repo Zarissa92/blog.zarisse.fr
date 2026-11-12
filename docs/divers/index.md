@@ -3,8 +3,15 @@ title: "Divers"
 description: "Compétences et conseils de Zaza : skills et accompagnement de petits collectifs."
 date:
   created: 2026-11-07
-  updated: 2026-11-08
+  updated: 2026-11-10 23:56
 ---
 
-## Skills
-<p>Je peux donner des conseils, gratuitements, à de petits collectifs, si besoin en est.</p>
+<!-- billets:debut -->
+- 10/11/2026 — [aboutme](aboutme.md)
+- 07/11/2026 — [Zone LGBT — Ressources](ressources.md)
+- 06/11/2026 — [CV](cv.md)
+
+**Sections :**
+
+- [Animé&Manga](Animé&Manga/index.md)
+<!-- billets:fin -->
